@@ -19,7 +19,7 @@ const ProductCard = ({ bookInfo }: Props) => {
       <a className={styles.link} href="#">
         <img
           className={styles.img}
-          src={bookInfo.imageLinks.thumbnail || ""}
+          src={bookInfo?.imageLinks?.thumbnail || ""}
           alt={bookInfo?.title}
         />
         <p className={styles.category}>

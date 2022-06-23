@@ -7,20 +7,22 @@ import styles from "./ProductList.module.scss";
 
 const ProductList = () => {
   const { totalItems, items: books } = useSelector(
-    (state: any) => state.books.booksData
+    (state: any) => state.booksReducer.booksData
   );
 
   return (
-    <div className={styles.wrapper}>
-      <div className="container">
-        <p className={styles.productAmount}>Found {totalItems} results</p>
-        <ul className={styles.productList}>
-          {books.map((book) => (
-            <ProductCard key={book.id} bookInfo={book.volumeInfo} />
-          ))}
-        </ul>
+    !!totalItems && (
+      <div className={styles.wrapper}>
+        <div className="container">
+          <p className={styles.productAmount}>Found {totalItems} results</p>
+          <ul className={styles.productList}>
+            {books.map((book) => (
+              <ProductCard bookInfo={book.volumeInfo} />
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

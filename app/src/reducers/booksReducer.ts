@@ -1,9 +1,11 @@
-import { SET_BOOKS } from "../constants";
+import { SET_BOOKS, SET_CATEGORY, SET_SORT } from "../constants";
 import type { ActionsTypes } from "../actions/actionCreator";
 import type { BooksDataType } from "../types";
 
 type DefaultStateType = {
   booksData: BooksDataType;
+  categorySelected: string;
+  sortSelected: string;
 };
 
 const defaultState: DefaultStateType = {
@@ -11,9 +13,11 @@ const defaultState: DefaultStateType = {
     items: [],
     totalItems: 0,
   },
+  categorySelected: "",
+  sortSelected: "relevance",
 };
 
-const books = (state = defaultState, action: any) => {
+const booksReducer = (state = defaultState, action: any) => {
   switch (action.type) {
     case SET_BOOKS:
       return {
@@ -23,9 +27,19 @@ const books = (state = defaultState, action: any) => {
           totalItems: action.payload.totalItems,
         },
       };
+    case SET_CATEGORY:
+      return {
+        ...state,
+        categorySelected: action.payload,
+      };
+    case SET_SORT:
+      return {
+        ...state,
+        sortSelected: action.payload,
+      };
     default:
       return state;
   }
 };
 
-export default books;
+export default booksReducer;

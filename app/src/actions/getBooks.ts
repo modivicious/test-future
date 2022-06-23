@@ -5,14 +5,13 @@ import type { SetBooksActionType } from "../actions/actionCreator";
 
 import { setBooks } from "./actionCreator";
 
-// const APIKey = "AIzaSyCI0q4vW6no6jSTrzolojAIhNJO3k6cQKQ";
-
 const getBooks = (
   searchQuery: string
 ): ThunkAction<Promise<void>, RootState, unknown, SetBooksActionType> => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { booksReducer } = getState();
     const response = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&maxResults=30&key=${process.env.API_KEY}`
+      `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}+subject:${booksReducer.categorySelected}&orderBy=${booksReducer.sortSelected}&maxResults=30&key=${process.env.API_KEY}`
     );
     dispatch(setBooks(response.data));
   };
