@@ -1,0 +1,15 @@
+.wrapper {
+  padding: 30px 0;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  justify-content: center;
+  gap: 40px;
+}
+
+.productAmount {
+  text-align: center;
+  margin-bottom: 25px;
+}
