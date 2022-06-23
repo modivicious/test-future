@@ -1,4 +1,8 @@
 import * as React from "react";
+import { useState } from "react";
+import useAppDispatch from "../../hooks/useAppDispatch";
+
+import getBooks from "../../actions/getBooks";
 
 import SearchBar from "../SearchBar";
 import Select from "../Select";
@@ -30,12 +34,22 @@ const filtersData = [
 ];
 
 const Search = () => {
+  const dispatch = useAppDispatch();
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const searchHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    dispatch(getBooks(searchValue));
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={searchHandler}>
           <h1 className={styles.title}>Search for books</h1>
-          <SearchBar />
+          <SearchBar setSearchValue={setSearchValue} />
           <div className={styles.filters}>
             {filtersData.map((filter) => (
               <Select

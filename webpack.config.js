@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 let mode = 'development';
 let target = 'web';
@@ -15,6 +16,7 @@ const plugins = [
     filename: '[name].[contenthash].css',
   }),
   new CleanWebpackPlugin(),
+  new Dotenv(),
 ];
 
 if (process.env.NODE_ENV === 'production') {
