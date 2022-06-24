@@ -38,6 +38,7 @@ module.exports = {
     filename: '[name].[contenthash].js',
     assetModuleFilename: '[name].[hash][ext][query]',
     clean: true,
+    publicPath: "/",
   },
 
   module: {
@@ -93,5 +94,6 @@ module.exports = {
     static: { directory: './app' },
     hot: true,
     port: 3000,
+    historyApiFallback: true,
   },
 };

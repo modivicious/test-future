@@ -25,14 +25,25 @@ const ProductList = () => {
   };
 
   return (
-    !!totalItems && (
-      <div className={styles.wrapper}>
-        <div className="container">
+    <div className={styles.wrapper}>
+      <div className="container">
+        {!!totalItems && (
           <div className={styles.content}>
             <p className={styles.productAmount}>Found {totalItems} results</p>
             <ul className={styles.productList}>
               {books.map((book) => (
-                <ProductCard bookInfo={book.volumeInfo} />
+                <ProductCard
+                  imageLink={book.volumeInfo?.imageLinks?.thumbnail}
+                  title={book.volumeInfo.title}
+                  categories={
+                    book.volumeInfo.categories && book.volumeInfo.categories[0]
+                  }
+                  authors={
+                    book.volumeInfo.authors &&
+                    book.volumeInfo.authors.join(", ")
+                  }
+                  path={`/book/${book.id}`}
+                />
               ))}
             </ul>
             {currentItemsCount + 30 < totalItems && (
@@ -45,9 +56,9 @@ const ProductList = () => {
               </button>
             )}
           </div>
-        </div>
+        )}
       </div>
-    )
+    </div>
   );
 };
 

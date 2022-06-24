@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import useAppDispatch from "../../hooks/useAppDispatch";
 
 import fetchBooks from "../../actions/fetchBooks";
@@ -40,6 +42,7 @@ const filtersData = [
 
 const Search = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isFirstFetch = useSelector(
     (state: any) => state.booksReducer.isFirstFetch
@@ -80,6 +83,8 @@ const Search = () => {
     else prepareNewFetch();
 
     dispatch(fetchBooks());
+
+    navigate("/");
   };
 
   return (
