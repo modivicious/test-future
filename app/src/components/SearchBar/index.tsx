@@ -3,15 +3,15 @@ import * as React from "react";
 import styles from "./SearchBar.module.scss";
 
 type Props = {
-  setSearchValue: (e: string) => void;
+  onSearchValueChange: (value: string) => void;
 };
 
-const SearchBar = ({ setSearchValue }: Props) => {
+const SearchBar = ({ onSearchValueChange }: Props) => {
   return (
     <div className={styles.wrapper}>
       <input
         className={styles.input}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => onSearchValueChange(e.target.value)}
         placeholder="Search..."
         type="text"
       />

@@ -1,11 +1,15 @@
 import * as React from "react";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import useAppDispatch from "../../hooks/useAppDispatch";
 
-import getBooks from "../../actions/getBooks";
+import fetchBooks from "../../actions/fetchBooks";
 import {
+  setSearchValue,
   setCategorySelected,
   setSortSelected,
+  setStartIndex,
+  setIsFirstFetch,
+  clearBooks,
 } from "../../actions/actionCreator";
 
 import SearchBar from "../SearchBar";
@@ -35,10 +39,20 @@ const filtersData = [
 ];
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [isFirstSearch, setIsFirstSearch] = useState(true);
-
   const dispatch = useAppDispatch();
+
+  const isFirstFetch = useSelector(
+    (state: any) => state.booksReducer.isFirstFetch
+  );
+
+  const onSearchValueChange = (value: string) => {
+    dispatch(setSearchValue(value));
+  };
+
+  const prepareNewFetch = () => {
+    dispatch(clearBooks());
+    dispatch(setStartIndex(0));
+  };
 
   const onSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -53,17 +67,19 @@ const Search = () => {
         break;
     }
 
-    if (!isFirstSearch) {
-      dispatch(getBooks(searchValue));
+    if (!isFirstFetch) {
+      prepareNewFetch();
+      dispatch(fetchBooks());
     }
   };
 
   const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isFirstSearch) setIsFirstSearch(false);
+    if (isFirstFetch) dispatch(setIsFirstFetch(false));
+    else prepareNewFetch();
 
-    dispatch(getBooks(searchValue));
+    dispatch(fetchBooks());
   };
 
   return (
@@ -71,7 +87,7 @@ const Search = () => {
       <div className={styles.content}>
         <form className={styles.form} onSubmit={onSearchSubmit}>
           <h1 className={styles.title}>Search for books</h1>
-          <SearchBar setSearchValue={setSearchValue} />
+          <SearchBar onSearchValueChange={onSearchValueChange} />
           <div className={styles.filters}>
             {filtersData.map((filter) => (
               <Select
