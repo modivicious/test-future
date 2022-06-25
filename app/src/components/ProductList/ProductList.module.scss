@@ -1,5 +1,5 @@
 .wrapper {
-  padding: 30px 0;
+  padding: 40px 0;
 }
 
 .content {
@@ -10,13 +10,13 @@
 
 .productList {
   display: grid;
-  grid-template-columns: repeat(4, max-content);
+  grid-template-columns: repeat(3, max-content);
   justify-content: center;
   gap: 40px;
 }
 
-.productAmount {
-  margin-bottom: 25px;
+.totalItems {
+  margin-bottom: 30px;
 }
 
 .loadBtn {
@@ -28,4 +28,18 @@
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
+}
+
+@media (max-width: 1000px) {
+  .productList {
+    grid-template-columns: repeat(2, max-content);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .productList {
+    grid-template-columns: max-content;
+    gap: 25px;
+  }
 }

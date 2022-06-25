@@ -29,7 +29,7 @@ const ProductList = () => {
       <div className="container">
         {!!totalItems && (
           <div className={styles.content}>
-            <p className={styles.productAmount}>Found {totalItems} results</p>
+            <p className={styles.totalItems}>Found {totalItems} results</p>
             <ul className={styles.productList}>
               {books.map((book) => (
                 <ProductCard

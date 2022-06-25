@@ -12,3 +12,21 @@ body {
   padding: 0 20px;
   margin: 0 auto;
 }
+
+.cutTextIntoTwoLines {
+  display: -webkit-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.cutTextWithNoWrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

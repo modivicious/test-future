@@ -22,9 +22,9 @@ const ProductCard = ({
     <article className={styles.card}>
       <Link className={styles.link} to={path}>
         <img className={styles.img} src={imageLink} alt={title} />
-        <p className={styles.category}>{categories}</p>
-        <h2 className={styles.name}>{title}</h2>
-        <p className={styles.authors}>{authors}</p>
+        <p className={`${styles.category} cutTextWithNoWrap`}>{categories}</p>
+        <h2 className={`${styles.title} cutTextIntoTwoLines`}>{title}</h2>
+        <p className={`${styles.authors} cutTextWithNoWrap`}>{authors}</p>
       </Link>
     </article>
   );

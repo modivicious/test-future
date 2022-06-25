@@ -89,22 +89,24 @@ const Search = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <form className={styles.form} onSubmit={onSearchSubmit}>
-          <h1 className={styles.title}>Search for books</h1>
-          <SearchBar onSearchValueChange={onSearchValueChange} />
-          <div className={styles.filters}>
-            {filtersData.map((filter) => (
-              <Select
-                key={filter.id}
-                id={filter.id}
-                label={filter.label}
-                options={filter.options}
-                onChange={onSelectChange}
-              />
-            ))}
-          </div>
-        </form>
+      <div className="container">
+        <div className={styles.content}>
+          <form className={styles.form} onSubmit={onSearchSubmit}>
+            <h1 className={styles.title}>Search for books</h1>
+            <SearchBar onSearchValueChange={onSearchValueChange} />
+            <div className={styles.filters}>
+              {filtersData.map((filter) => (
+                <Select
+                  key={filter.id}
+                  id={filter.id}
+                  label={filter.label}
+                  options={filter.options}
+                  onChange={onSelectChange}
+                />
+              ))}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
