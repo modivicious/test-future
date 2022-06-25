@@ -6,6 +6,7 @@ import {
   SET_START_INDEX,
   SET_IS_FIRST_FETCH,
   CLEAR_BOOKS,
+  SET_IS_FETCHING,
 } from "../constants";
 import type { BooksDataType } from "../types";
 
@@ -17,6 +18,16 @@ export type SetBooksType = {
 export const setBooks = (booksData: BooksDataType): SetBooksType => ({
   type: SET_BOOKS,
   payload: booksData,
+});
+
+export type SetIsFetchingType = {
+  type: typeof SET_IS_FETCHING;
+  payload: boolean;
+};
+
+export const setIsFetching = (bool: boolean): SetIsFetchingType => ({
+  type: SET_IS_FETCHING,
+  payload: bool,
 });
 
 export type SetSearchValueType = {
@@ -83,6 +94,7 @@ export const clearBooks = (): ClearBooksType => ({
 
 export type ActionsTypes =
   | SetBooksType
+  | SetIsFetchingType
   | SetCategorySelectedType
   | SetSortSelectedType
   | SetStartIndexType

@@ -7,6 +7,7 @@ import useAppDispatch from "../../hooks/useAppDispatch";
 import fetchBooks from "../../actions/fetchBooks";
 import {
   setSearchValue,
+  setIsFetching,
   setCategorySelected,
   setSortSelected,
   setStartIndex,
@@ -72,6 +73,7 @@ const Search = () => {
 
     if (!isFirstFetch) {
       prepareNewFetch();
+      dispatch(setIsFetching(true));
       dispatch(fetchBooks());
     }
   };
@@ -82,9 +84,10 @@ const Search = () => {
     if (isFirstFetch) dispatch(setIsFirstFetch(false));
     else prepareNewFetch();
 
+    dispatch(setIsFetching(true));
     dispatch(fetchBooks());
 
-    navigate("/");
+    navigate("search");
   };
 
   return (

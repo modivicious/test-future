@@ -1,5 +1,6 @@
 import {
   SET_BOOKS,
+  SET_IS_FETCHING,
   SET_SEARCH_VALUE,
   SET_CATEGORY,
   SET_SORT,
@@ -12,6 +13,7 @@ import type { BooksDataType } from "../types";
 
 type DefaultStateType = {
   booksData: BooksDataType;
+  isFetching: boolean;
   searchValue: string;
   categorySelected: string;
   sortSelected: string;
@@ -24,6 +26,7 @@ const defaultState: DefaultStateType = {
     items: [],
     totalItems: 0,
   },
+  isFetching: false,
   searchValue: "",
   categorySelected: "",
   sortSelected: "relevance",
@@ -40,6 +43,12 @@ const booksReducer = (state = defaultState, action: any) => {
           items: [...state.booksData.items, ...(action.payload.items || [])],
           totalItems: action.payload.totalItems,
         },
+        isFetching: false,
+      };
+    case SET_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.payload,
       };
     case SET_SEARCH_VALUE:
       return {
