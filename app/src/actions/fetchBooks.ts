@@ -6,6 +6,8 @@ import type { SetBooksType } from "./actionCreator";
 
 import { setBooks } from "./actionCreator";
 
+import { notifyError } from "../notifications";
+
 const fetchBooks = (): ThunkAction<
   Promise<void>,
   RootState,
@@ -13,16 +15,19 @@ const fetchBooks = (): ThunkAction<
   SetBooksType
 > => {
   return async (dispatch, getState) => {
-    const { booksReducer } = getState();
+    try {
+      const { booksReducer } = getState();
 
-    const response = await axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${booksReducer.searchValue}+subject:${booksReducer.categorySelected}&orderBy=${booksReducer.sortSelected}&maxResults=30&startIndex=${booksReducer.startIndex}&key=${process.env.API_KEY}`
-      )
-      .then((res) => res.data)
-      .catch((err) => console.error(err));
+      const response = await axios
+        .get(
+          `https://www.googleapis.com/books/v1/volumes?q=${booksReducer.searchValue}+subject:${booksReducer.categorySelected}&orderBy=${booksReducer.sortSelected}&maxResults=30&startIndex=${booksReducer.startIndex}&key=${process.env.API_KEY}`
+        )
+        .then((res) => res.data);
 
-    dispatch(setBooks(response));
+      dispatch(setBooks(response));
+    } catch (err) {
+      notifyError(err);
+    }
   };
 };
 
