@@ -1,4 +1,4 @@
 export type BooksDataType = {
-  items: {}[];
+  items: { [key: string]: any }[];
   totalItems: number;
 };

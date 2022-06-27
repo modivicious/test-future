@@ -2,12 +2,13 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import fetchBookById from "../../actions/fetchBookById";
+import { fetchBookById } from "../../store/reducers/actionCreators";
 
 import styles from "./ProductPage.module.scss";
 
 const ProductPage = () => {
   const { id } = useParams();
+
   const [book, setBook] = useState(Object);
 
   useEffect(() => {

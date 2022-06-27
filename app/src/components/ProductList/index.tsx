@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import useAppDispatch from "../../hooks/useAppDispatch";
 
-import { setStartIndex } from "../../actions/actionCreator";
-import fetchBooks from "../../actions/fetchBooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { RootState } from "../../store";
+import { setStartIndex } from "../../store/reducers/bookSlice";
+import { fetchBooks } from "../../store/reducers/actionCreators";
 
 import ProductCard from "../ProductCard";
 import Loader from "../Loader";
@@ -13,16 +13,18 @@ import styles from "./ProductList.module.scss";
 const ProductList = () => {
   const dispatch = useAppDispatch();
 
-  const { totalItems, items: books } = useSelector(
-    (state: any) => state.booksReducer.booksData
+  const { totalItems, items: books } = useAppSelector(
+    (state: RootState) => state.bookSlice.booksData
   );
-  const currentItemsCount = useSelector(
-    (state: any) => state.booksReducer.startIndex
+  const currentItemsCount = useAppSelector(
+    (state: RootState) => state.bookSlice.startIndex
   );
-  const isFirstFetch = useSelector(
-    (state: any) => state.booksReducer.isFirstFetch
+  const isFirstFetch = useAppSelector(
+    (state: RootState) => state.bookSlice.isFirstFetch
   );
-  const isFetching = useSelector((state: any) => state.booksReducer.isFetching);
+  const isFetching = useAppSelector(
+    (state: RootState) => state.bookSlice.isFetching
+  );
 
   const onLoadMore = () => {
     dispatch(setStartIndex(currentItemsCount + 30));

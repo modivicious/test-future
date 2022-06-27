@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import useAppDispatch from "../../hooks/useAppDispatch";
-
-import fetchBooks from "../../actions/fetchBooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { RootState } from "../../store";
+import { fetchBooks } from "../../store/reducers/actionCreators";
 import {
   setSearchValue,
   setIsFetching,
@@ -13,7 +12,7 @@ import {
   setStartIndex,
   setIsFirstFetch,
   clearBooks,
-} from "../../actions/actionCreator";
+} from "../../store/reducers/bookSlice";
 
 import SearchBar from "../SearchBar";
 import Select from "../Select";
@@ -45,8 +44,8 @@ const Search = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isFirstFetch = useSelector(
-    (state: any) => state.booksReducer.isFirstFetch
+  const isFirstFetch = useAppSelector(
+    (state: RootState) => state.bookSlice.isFirstFetch
   );
 
   const onSearchValueChange = (value: string) => {
