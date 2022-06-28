@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: future-prod
+    image: future-prod
+    build:
+      target: production

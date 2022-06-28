@@ -3,7 +3,8 @@
   "scripts": {
     "start": "cross-env SERVE=true webpack serve --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "build-dev": "webpack"
+    "build-dev": "webpack",
+    "dev": "docker-compose -f docker-compose.dev.yml up"
   },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.5",
@@ -16,7 +17,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
-    "dotenv": "^16.0.1",
     "dotenv-webpack": "^7.1.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
