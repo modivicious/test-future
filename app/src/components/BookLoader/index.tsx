@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styles from "./Loader.module.scss";
+import styles from "./BookLoader.module.scss";
 
 const Loader = () => {
   return (

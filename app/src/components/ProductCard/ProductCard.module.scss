@@ -3,6 +3,10 @@
   height: 380px;
 
   background-color: #f0f0f0;
+
+  &:hover .title {
+    color: #38637d;
+  }
 }
 
 .link {
@@ -32,6 +36,8 @@
 .title {
   font-weight: 700;
   font-size: 18px;
+
+  transition: color 0.1s ease-out;
 
   margin-bottom: 5px;
 }

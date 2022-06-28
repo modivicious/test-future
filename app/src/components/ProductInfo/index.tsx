@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Loader from "../Loader";
+import BookLoader from "../BookLoader";
 
 import noPhoto from "../../../images/nophoto.svg";
 
@@ -39,7 +39,7 @@ const ProductInfo = ({
             </div>
           </div>
         ) : (
-          <Loader />
+          <BookLoader />
         )}
       </div>
     </div>

@@ -35,7 +35,7 @@ const CurrentBook = () => {
         book?.volumeInfo?.imageLinks?.thumbnail
       }
       categories={
-        book.volumeInfo?.categories && book.volumeInfo.categories.join(", ")
+        book?.volumeInfo?.categories && book.volumeInfo.categories.join(", ")
       }
       title={book?.volumeInfo?.title}
       authors={book?.volumeInfo?.authors && book.volumeInfo.authors.join(", ")}

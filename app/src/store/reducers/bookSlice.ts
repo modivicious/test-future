@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { fetchBooks, fetchBookById } from "./actionCreators";
+import { fetchBooks, fetchMoreBooks, fetchBookById } from "./actionCreators";
 import type { BooksDataType, AnyObjectType } from "../../types";
 
 interface IBookState {
@@ -13,6 +13,7 @@ interface IBookState {
   isFirstFetch: boolean;
   currentBook: AnyObjectType;
   isCurrentBookFetching: boolean;
+  isMoreBooksFetching: boolean;
 }
 
 const initialState: IBookState = {
@@ -28,6 +29,7 @@ const initialState: IBookState = {
   isFirstFetch: true,
   currentBook: {},
   isCurrentBookFetching: false,
+  isMoreBooksFetching: false,
 };
 
 const bookSlice = createSlice({
@@ -37,39 +39,53 @@ const bookSlice = createSlice({
     setSearchValue(state: IBookState, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
-    setIsFetching(state: IBookState, action: PayloadAction<boolean>) {
-      state.isFetching = action.payload;
-    },
     setCategorySelected(state: IBookState, action: PayloadAction<string>) {
       state.categorySelected = action.payload;
     },
     setSortSelected(state: IBookState, action: PayloadAction<string>) {
       state.sortSelected = action.payload;
     },
-    setStartIndex(state: IBookState, action: PayloadAction<number>) {
-      state.startIndex = action.payload;
-    },
     setIsFirstFetch(state: IBookState, action: PayloadAction<boolean>) {
       state.isFirstFetch = action.payload;
-    },
-    clearBooks(state: IBookState) {
-      state.booksData = {
-        items: [],
-        totalItems: 0,
-      };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchBooks.fulfilled,
       (state: IBookState, action: PayloadAction<BooksDataType>) => {
+        state.isFetching = false;
         state.booksData = {
-          items: [...state.booksData.items, ...(action.payload.items || [])],
+          items: action.payload.items,
           totalItems: action.payload.totalItems,
         };
-        state.isFetching = false;
+        state.startIndex = 0;
       }
     );
+    builder.addCase(fetchBooks.pending, (state: IBookState) => {
+      state.isFetching = true;
+    });
+    builder.addCase(fetchBooks.rejected, (state: IBookState) => {
+      state.isFetching = false;
+    });
+
+    builder.addCase(
+      fetchMoreBooks.fulfilled,
+      (state: IBookState, action: PayloadAction<BooksDataType>) => {
+        state.isMoreBooksFetching = false;
+        state.booksData = {
+          items: [...state.booksData.items, ...action.payload.items],
+          totalItems: action.payload.totalItems,
+        };
+        state.startIndex += 30;
+      }
+    );
+    builder.addCase(fetchMoreBooks.pending, (state: IBookState) => {
+      state.isMoreBooksFetching = true;
+    });
+    builder.addCase(fetchMoreBooks.rejected, (state: IBookState) => {
+      state.isMoreBooksFetching = false;
+    });
+
     builder.addCase(
       fetchBookById.fulfilled,
       (state: IBookState, action: PayloadAction<AnyObjectType>) => {
@@ -80,17 +96,17 @@ const bookSlice = createSlice({
     builder.addCase(fetchBookById.pending, (state: IBookState) => {
       state.isCurrentBookFetching = true;
     });
+    builder.addCase(fetchBookById.rejected, (state: IBookState) => {
+      state.isCurrentBookFetching = false;
+    });
   },
 });
 
 export const {
   setSearchValue,
-  setIsFetching,
   setCategorySelected,
   setSortSelected,
-  setStartIndex,
   setIsFirstFetch,
-  clearBooks,
 } = bookSlice.actions;
 
 export default bookSlice.reducer;

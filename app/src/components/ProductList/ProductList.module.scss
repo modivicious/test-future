@@ -13,6 +13,10 @@
   grid-template-columns: repeat(3, max-content);
   justify-content: center;
   gap: 40px;
+
+  & + * {
+    margin-top: 40px;
+  }
 }
 
 .totalItems {

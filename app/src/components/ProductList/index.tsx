@@ -2,7 +2,8 @@ import * as React from "react";
 
 import ProductCard from "../ProductCard";
 import Button from "../Button";
-import Loader from "../Loader";
+import BookLoader from "../BookLoader";
+import SpinLoader from "../SpinLoader";
 
 import { AnyObjectType } from "../../types";
 
@@ -11,18 +12,20 @@ import styles from "./ProductList.module.scss";
 type Props = {
   books: AnyObjectType[];
   totalItems: number;
-  currentItemsCount: number;
+  itemsOnPage: number;
   isFirstFetch?: boolean;
   isFetching?: boolean;
+  isMoreBooksFetching?: boolean;
   onLoadMore: () => void;
 };
 
 const ProductList = ({
   books,
   totalItems,
-  currentItemsCount,
+  itemsOnPage,
   isFirstFetch = false,
   isFetching = false,
+  isMoreBooksFetching = false,
   onLoadMore,
 }: Props) => {
   return (
@@ -50,15 +53,18 @@ const ProductList = ({
                   />
                 ))}
               </ul>
-              {currentItemsCount + 30 < totalItems && (
-                <Button onClick={onLoadMore} type="button">
-                  Load More
-                </Button>
-              )}
+              {itemsOnPage + 30 < totalItems &&
+                (!isMoreBooksFetching ? (
+                  <Button onClick={onLoadMore} type="button">
+                    Load More
+                  </Button>
+                ) : (
+                  <SpinLoader />
+                ))}
             </div>
           )
         ) : (
-          <Loader />
+          <BookLoader />
         )}
       </div>
     </div>
