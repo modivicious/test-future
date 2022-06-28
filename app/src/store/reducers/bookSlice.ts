@@ -64,7 +64,7 @@ const bookSlice = createSlice({
       fetchBooks.fulfilled,
       (state: IBookState, action: PayloadAction<BooksDataType>) => {
         state.booksData = {
-          items: [...state.booksData.items, ...action.payload.items],
+          items: [...state.booksData.items, ...(action.payload.items || [])],
           totalItems: action.payload.totalItems,
         };
         state.isFetching = false;
