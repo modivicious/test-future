@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { notifyError } from "../../notifications";
 
-import { BooksDataType } from "../../types";
+import type { BooksDataType, AnyObjectType } from "../../types";
 import { RootState } from "..";
 
 export const fetchBooks = createAsyncThunk<
@@ -26,17 +26,17 @@ export const fetchBooks = createAsyncThunk<
   }
 });
 
-export const fetchBookById = async (
-  bookId: string | undefined,
-  setBook: (response: Object) => void
-) => {
+export const fetchBookById = createAsyncThunk<
+  AnyObjectType,
+  string | undefined
+>("books/fetchBookById", async (bookId: string | undefined) => {
   try {
     const response = await axios
       .get(`https://www.googleapis.com/books/v1/volumes/${bookId}`)
       .then((res) => res.data);
 
-    setBook(response);
+    return response;
   } catch (err) {
     notifyError(err);
   }
-};
+});

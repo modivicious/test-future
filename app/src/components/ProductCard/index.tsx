@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import noPhoto from "../../../images/nophoto.svg";
+
 import styles from "./ProductCard.module.scss";
 
 type Props = {
@@ -12,7 +14,7 @@ type Props = {
 };
 
 const ProductCard = ({
-  imageLink = "",
+  imageLink = noPhoto,
   title = "",
   categories = "",
   authors = "",

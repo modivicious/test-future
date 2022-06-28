@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { fetchBooks } from "./actionCreators";
-import { BooksDataType } from "../../types";
+import { fetchBooks, fetchBookById } from "./actionCreators";
+import type { BooksDataType, AnyObjectType } from "../../types";
 
 interface IBookState {
   booksData: BooksDataType;
@@ -11,6 +11,8 @@ interface IBookState {
   sortSelected: string;
   startIndex: number;
   isFirstFetch: boolean;
+  currentBook: AnyObjectType;
+  isCurrentBookFetching: boolean;
 }
 
 const initialState: IBookState = {
@@ -24,6 +26,8 @@ const initialState: IBookState = {
   sortSelected: "relevance",
   startIndex: 0,
   isFirstFetch: true,
+  currentBook: {},
+  isCurrentBookFetching: false,
 };
 
 const bookSlice = createSlice({
@@ -66,6 +70,16 @@ const bookSlice = createSlice({
         state.isFetching = false;
       }
     );
+    builder.addCase(
+      fetchBookById.fulfilled,
+      (state: IBookState, action: PayloadAction<AnyObjectType>) => {
+        state.isCurrentBookFetching = false;
+        state.currentBook = action.payload;
+      }
+    );
+    builder.addCase(fetchBookById.pending, (state: IBookState) => {
+      state.isCurrentBookFetching = true;
+    });
   },
 });
 

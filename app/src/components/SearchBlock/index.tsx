@@ -13,39 +13,22 @@ import {
   setIsFirstFetch,
   clearBooks,
 } from "../../store/reducers/bookSlice";
+import { filtersData } from "../../data";
 
 import SearchBar from "../SearchBar";
 import Select from "../Select";
 
-import styles from "./Search.module.scss";
+import styles from "./SearchBlock.module.scss";
 
-const filtersData = [
-  {
-    id: "categories",
-    label: "categories",
-    options: [
-      { name: "all", value: "" },
-      { name: "art" },
-      { name: "biography" },
-      { name: "computers" },
-      { name: "history" },
-      { name: "medical" },
-      { name: "poetry" },
-    ],
-  },
-  {
-    id: "sort",
-    label: "sorting by",
-    options: [{ name: "relevance" }, { name: "newest" }],
-  },
-];
-
-const Search = () => {
+const SearchBlock = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const isFirstFetch = useAppSelector(
     (state: RootState) => state.bookSlice.isFirstFetch
+  );
+  const searchValue = useAppSelector(
+    (state: RootState) => state.bookSlice.searchValue
   );
 
   const onSearchValueChange = (value: string) => {
@@ -55,6 +38,11 @@ const Search = () => {
   const prepareNewFetch = () => {
     dispatch(clearBooks());
     dispatch(setStartIndex(0));
+  };
+
+  const getBooks = () => {
+    dispatch(setIsFetching(true));
+    dispatch(fetchBooks());
   };
 
   const onSelectChange = (
@@ -70,23 +58,23 @@ const Search = () => {
         break;
     }
 
-    if (!isFirstFetch) {
+    if (!isFirstFetch && searchValue) {
       prepareNewFetch();
-      dispatch(setIsFetching(true));
-      dispatch(fetchBooks());
+      getBooks();
     }
   };
 
   const onSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isFirstFetch) dispatch(setIsFirstFetch(false));
-    else prepareNewFetch();
+    if (searchValue) {
+      if (isFirstFetch) dispatch(setIsFirstFetch(false));
+      else prepareNewFetch();
 
-    dispatch(setIsFetching(true));
-    dispatch(fetchBooks());
+      getBooks();
 
-    navigate("search");
+      navigate("search");
+    }
   };
 
   return (
@@ -114,4 +102,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchBlock;

@@ -2,18 +2,18 @@ import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import Search from "./components/Search";
-import ProductList from "./components/ProductList";
-import ProductPage from "./components/ProductPage";
+import SearchBlock from "./components/SearchBlock";
+import SearchResults from "./pages/SearchResults";
+import CurrentBook from "./pages/CurrentBook";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Search />
+      <SearchBlock />
       <Routes>
         <Route path="/" />
-        <Route path="search" element={<ProductList />} />
-        <Route path="book/:id" element={<ProductPage />} />
+        <Route path="search" element={<SearchResults />} />
+        <Route path="book/:id" element={<CurrentBook />} />
       </Routes>
       <ToastContainer
         position="bottom-left"

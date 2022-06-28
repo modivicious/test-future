@@ -1,36 +1,30 @@
 import * as React from "react";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { RootState } from "../../store";
-import { setStartIndex } from "../../store/reducers/bookSlice";
-import { fetchBooks } from "../../store/reducers/actionCreators";
-
 import ProductCard from "../ProductCard";
+import Button from "../Button";
 import Loader from "../Loader";
+
+import { AnyObjectType } from "../../types";
 
 import styles from "./ProductList.module.scss";
 
-const ProductList = () => {
-  const dispatch = useAppDispatch();
+type Props = {
+  books: AnyObjectType[];
+  totalItems: number;
+  currentItemsCount: number;
+  isFirstFetch?: boolean;
+  isFetching?: boolean;
+  onLoadMore: () => void;
+};
 
-  const { totalItems, items: books } = useAppSelector(
-    (state: RootState) => state.bookSlice.booksData
-  );
-  const currentItemsCount = useAppSelector(
-    (state: RootState) => state.bookSlice.startIndex
-  );
-  const isFirstFetch = useAppSelector(
-    (state: RootState) => state.bookSlice.isFirstFetch
-  );
-  const isFetching = useAppSelector(
-    (state: RootState) => state.bookSlice.isFetching
-  );
-
-  const onLoadMore = () => {
-    dispatch(setStartIndex(currentItemsCount + 30));
-    dispatch(fetchBooks());
-  };
-
+const ProductList = ({
+  books,
+  totalItems,
+  currentItemsCount,
+  isFirstFetch = false,
+  isFetching = false,
+  onLoadMore,
+}: Props) => {
   return (
     <div className={styles.wrapper}>
       <div className="container">
@@ -39,8 +33,9 @@ const ProductList = () => {
             <div className={styles.content}>
               <p className={styles.totalItems}>Found {totalItems} results</p>
               <ul className={styles.productList}>
-                {books.map((book) => (
+                {books.map((book, index) => (
                   <ProductCard
+                    key={book.id + index}
                     imageLink={book.volumeInfo?.imageLinks?.thumbnail}
                     title={book.volumeInfo.title}
                     categories={
@@ -56,13 +51,9 @@ const ProductList = () => {
                 ))}
               </ul>
               {currentItemsCount + 30 < totalItems && (
-                <button
-                  className={styles.loadBtn}
-                  onClick={onLoadMore}
-                  type="button"
-                >
+                <Button onClick={onLoadMore} type="button">
                   Load More
-                </button>
+                </Button>
               )}
             </div>
           )
