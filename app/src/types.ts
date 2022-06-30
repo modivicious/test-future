@@ -1,8 +1,8 @@
-export type BooksDataType = {
-  items: { [key: string]: any }[];
-  totalItems: number;
-};
-
 export type AnyObjectType = {
   [key: string]: any;
+};
+
+export type BooksDataType = {
+  items: AnyObjectType[];
+  totalItems: number;
 };

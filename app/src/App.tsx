@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import SearchBlock from "./components/SearchBlock";
+import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
 import CurrentBook from "./pages/CurrentBook";
 
@@ -11,7 +12,7 @@ const App = () => {
     <BrowserRouter>
       <SearchBlock />
       <Routes>
-        <Route path="/" />
+        <Route path="/" element={<Home />} />
         <Route path="search" element={<SearchResults />} />
         <Route path="book/:id" element={<CurrentBook />} />
       </Routes>
