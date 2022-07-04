@@ -15,7 +15,14 @@ const fetchBooksThunk = (type: string) =>
 
         const response = await axios
           .get(
-            `https://www.googleapis.com/books/v1/volumes?q=${bookSlice.searchValue}+subject:${bookSlice.categorySelected}&orderBy=${bookSlice.sortSelected}&maxResults=30&startIndex=${bookSlice.startIndex}&key=${process.env.API_KEY}`
+            `https://www.googleapis.com/books/v1/volumes?q=${
+              bookSlice.searchValue
+            }${
+              bookSlice.categorySelected &&
+              `+subject:${bookSlice.categorySelected}`
+            }&orderBy=${bookSlice.sortSelected}&maxResults=30&startIndex=${
+              bookSlice.startIndex
+            }&key=${process.env.API_KEY}`
           )
           .then((res) => res.data);
 
